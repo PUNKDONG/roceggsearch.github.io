@@ -29,7 +29,7 @@ body {
   padding: 36px 0 56px;
 }
 
-.ad-top {
+.slot-top {
   margin-bottom: 18px;
   padding: 14px 18px;
   border: 1px dashed rgba(197, 82, 45, 0.45);
@@ -42,7 +42,7 @@ body {
   box-shadow: var(--shadow);
 }
 
-.ad-side {
+.slot-side {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
@@ -59,11 +59,11 @@ body {
   backdrop-filter: blur(8px);
 }
 
-.ad-side.left {
+.slot-side.left {
   left: 18px;
 }
 
-.ad-side.right {
+.slot-side.right {
   right: 18px;
 }
 
@@ -167,7 +167,7 @@ li {
   margin-top: 24px;
 }
 
-.ad-bottom {
+.slot-bottom {
   padding: 14px 18px;
   border: 1px dashed rgba(197, 82, 45, 0.45);
   border-radius: 18px;
@@ -199,7 +199,7 @@ li {
     grid-template-columns: 1fr;
   }
 
-  .ad-side {
+  .slot-side {
     display: none;
   }
 }
