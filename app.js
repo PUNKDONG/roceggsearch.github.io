@@ -8,12 +8,14 @@ const submitForm = document.getElementById("submit-form");
 const submitMessage = document.getElementById("submit-message");
 const submitCaptcha = document.getElementById("submit-captcha");
 const captchaLabel = document.getElementById("captcha-label");
+const appConfig = window.ROCEGG_CONFIG || {};
 
 const SUBMIT_ENDPOINT = "https://script.google.com/macros/s/AKfycbwO0AnLWpDflmF5GeFOiLBerdzRkAcchac5dwD2jvZxLWPZ4YWa0p9hxjPkfFes6WU3/exec";
 
 let records = [];
 let captchaAnswer = null;
 
+setupAnalytics();
 loadData();
 refreshCaptcha();
 
@@ -208,4 +210,24 @@ function refreshCaptcha() {
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function setupAnalytics() {
+  const measurementId = String(appConfig.gaMeasurementId || "").trim();
+  if (!/^G-[A-Z0-9]+$/i.test(measurementId)) {
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+  document.head.appendChild(script);
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+
+  window.gtag("js", new Date());
+  window.gtag("config", measurementId);
 }
