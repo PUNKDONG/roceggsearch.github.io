@@ -29,19 +29,6 @@ body {
   padding: 36px 0 56px;
 }
 
-.slot-top {
-  margin-bottom: 18px;
-  padding: 14px 18px;
-  border: 1px dashed rgba(197, 82, 45, 0.45);
-  border-radius: 18px;
-  background: linear-gradient(135deg, rgba(255, 244, 220, 0.95), rgba(255, 233, 199, 0.92));
-  color: #7c3a1f;
-  text-align: center;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  box-shadow: var(--shadow);
-}
-
 .slot-side {
   position: fixed;
   top: 50%;
