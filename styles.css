@@ -163,6 +163,37 @@ li {
   color: #b42318;
 }
 
+.footer {
+  margin-top: 24px;
+}
+
+.ad-bottom {
+  padding: 14px 18px;
+  border: 1px dashed rgba(197, 82, 45, 0.45);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 244, 220, 0.95), rgba(255, 233, 199, 0.92));
+  color: #7c3a1f;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: var(--shadow);
+}
+
+.repo-link {
+  margin: 14px 0 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.repo-link a {
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+
+.repo-link a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .lookup-form {
     grid-template-columns: 1fr;
