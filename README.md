@@ -1,3 +1,5 @@
+# 一键访问 https://punkdong.github.io/roceggsearch.github.io/
+
 # 洛克王国查蛋助手
 
 这是一个适合直接发布到 `GitHub Pages` 的纯前端版本。
