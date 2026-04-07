@@ -10,8 +10,6 @@ const submitCaptcha = document.getElementById("submit-captcha");
 const captchaLabel = document.getElementById("captcha-label");
 
 const SUBMIT_ENDPOINT = "https://script.google.com/macros/s/AKfycbwO0AnLWpDflmF5GeFOiLBerdzRkAcchac5dwD2jvZxLWPZ4YWa0p9hxjPkfFes6WU3/exec";
-const DUPLICATE_KEY = "rocegg-last-submit";
-const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
 
 let records = [];
 let captchaAnswer = null;
@@ -138,14 +136,6 @@ submitForm.addEventListener("submit", async (event) => {
     return;
   }
 
-  if (isDuplicateSubmission(height, weight, name)) {
-    submitMessage.textContent = "相同内容刚刚提交过，请勿重复上传";
-    submitMessage.classList.add("error");
-    submitMessage.classList.remove("hidden");
-    refreshCaptcha();
-    return;
-  }
-
   submitMessage.textContent = "上传中...";
   submitMessage.classList.remove("hidden");
 
@@ -167,7 +157,6 @@ submitForm.addEventListener("submit", async (event) => {
       throw new Error(data.error || "上传失败");
     }
 
-    rememberSubmission(height, weight, name);
     submitMessage.textContent = "上传成功，已记录到表格";
     submitMessage.classList.add("success");
     submitForm.reset();
@@ -219,35 +208,4 @@ function refreshCaptcha() {
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function isDuplicateSubmission(height, weight, name) {
-  try {
-    const raw = localStorage.getItem(DUPLICATE_KEY);
-    if (!raw) {
-      return false;
-    }
-
-    const saved = JSON.parse(raw);
-    if (Date.now() - saved.time > DUPLICATE_WINDOW_MS) {
-      return false;
-    }
-
-    return saved.height === height && saved.weight === weight && saved.name === name;
-  } catch (error) {
-    return false;
-  }
-}
-
-function rememberSubmission(height, weight, name) {
-  try {
-    localStorage.setItem(DUPLICATE_KEY, JSON.stringify({
-      height,
-      weight,
-      name,
-      time: Date.now()
-    }));
-  } catch (error) {
-    // Ignore storage failures and keep submission flow usable.
-  }
 }
