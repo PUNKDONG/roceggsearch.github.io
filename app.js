@@ -9,7 +9,7 @@ const submitMessage = document.getElementById("submit-message");
 const submitCaptcha = document.getElementById("submit-captcha");
 const captchaLabel = document.getElementById("captcha-label");
 
-const SUBMIT_ENDPOINT = "https://script.google.com/macros/s/AKfycbyV5PTXBCM2Wp0hHkkNB6QcgRaqiOLWa6ULOKEYu-EB5BcIG0arS-WSojlMw0VETWQlXw/exec";
+const SUBMIT_ENDPOINT = "https://script.google.com/macros/s/AKfycbxwoJvj8__yCheJcAI2xyIsE-hAETxqXGF9qSnUrUJ_Hn10LhPHlxkuuPThfE5y6pPN/exec";
 const DUPLICATE_KEY = "rocegg-last-submit";
 const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
 
