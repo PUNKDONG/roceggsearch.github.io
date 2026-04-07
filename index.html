@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>洛克王国查蛋助手</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <aside class="ad-side left">广告位招租</aside>
+  <aside class="ad-side right">广告位招租</aside>
+
+  <main class="wrap">
+    <div class="ad-top">广告位招租</div>
+
+    <section class="hero">
+      <h1>洛克王国查蛋助手</h1>
+      <p>输入炫彩蛋的身高和体重数值，页面会直接在浏览器里匹配图鉴区间，不依赖后端接口，可直接部署到 GitHub Pages。</p>
+    </section>
+
+    <section class="panel">
+      <form id="lookup-form" class="lookup-form">
+        <label>
+          <span>身高</span>
+          <input id="height" name="height" placeholder="例如 0.8" required>
+        </label>
+        <label>
+          <span>体重</span>
+          <input id="weight" name="weight" placeholder="例如 12" required>
+        </label>
+        <button type="submit">查询</button>
+      </form>
+
+      <section id="result" class="result hidden">
+        <p id="result-meta" class="meta"></p>
+        <p id="result-error" class="error hidden"></p>
+        <ul id="result-list"></ul>
+      </section>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
