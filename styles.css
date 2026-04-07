@@ -116,13 +116,6 @@ button {
   cursor: pointer;
 }
 
-.secondary-button {
-  margin-top: 22px;
-  background: #fff;
-  color: var(--primary-dark);
-  border: 1px solid var(--line);
-}
-
 .result {
   margin-top: 22px;
   padding-top: 22px;
@@ -131,8 +124,7 @@ button {
 
 .submit-box {
   margin-top: 22px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
+  margin-bottom: 16px;
 }
 
 .submit-form {
@@ -191,7 +183,10 @@ li {
   margin-top: 24px;
 }
 
+.slot-trigger,
 .slot-bottom {
+  display: block;
+  width: 100%;
   padding: 14px 18px;
   border: 1px dashed rgba(197, 82, 45, 0.45);
   border-radius: 18px;
@@ -201,6 +196,10 @@ li {
   font-weight: 700;
   letter-spacing: 0.04em;
   box-shadow: var(--shadow);
+}
+
+.slot-trigger {
+  height: auto;
 }
 
 .repo-link {

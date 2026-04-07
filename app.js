@@ -20,9 +20,11 @@ loadData();
 refreshCaptcha();
 
 toggleSubmitButton.addEventListener("click", () => {
+  const willShow = submitForm.classList.contains("hidden");
   submitForm.classList.toggle("hidden");
   submitMessage.classList.add("hidden");
-  if (!submitForm.classList.contains("hidden")) {
+  toggleSubmitButton.textContent = willShow ? "收起提交表单" : "提交新数据";
+  if (willShow) {
     refreshCaptcha();
   }
 });
@@ -170,6 +172,7 @@ submitForm.addEventListener("submit", async (event) => {
     submitMessage.classList.add("success");
     submitForm.reset();
     submitForm.classList.add("hidden");
+    toggleSubmitButton.textContent = "提交新数据";
     refreshCaptcha();
   } catch (error) {
     submitMessage.textContent = error.message || "上传失败";
