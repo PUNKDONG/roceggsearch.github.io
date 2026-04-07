@@ -1,4 +1,4 @@
-# 一键访问 https://punkdong.github.io/roceggsearch.github.io/
+# 一键访问 https://punkdong.github.io/rocegg/
 
 # 洛克王国查蛋助手
 
