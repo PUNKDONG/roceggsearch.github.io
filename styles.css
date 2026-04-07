@@ -116,10 +116,47 @@ button {
   cursor: pointer;
 }
 
+.secondary-button {
+  margin-top: 22px;
+  background: #fff;
+  color: var(--primary-dark);
+  border: 1px solid var(--line);
+}
+
 .result {
   margin-top: 22px;
   padding-top: 22px;
   border-top: 1px solid var(--line);
+}
+
+.submit-box {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.submit-form {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.submit-message {
+  margin: 12px 0 0;
+  color: var(--muted);
+}
+
+.submit-message.success {
+  color: #067647;
+}
+
+.submit-message.error {
+  color: #b42318;
 }
 
 .meta {
@@ -183,6 +220,10 @@ li {
 
 @media (max-width: 768px) {
   .lookup-form {
+    grid-template-columns: 1fr;
+  }
+
+  .submit-form {
     grid-template-columns: 1fr;
   }
 

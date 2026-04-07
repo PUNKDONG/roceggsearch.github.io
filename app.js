@@ -3,10 +3,29 @@ const result = document.getElementById("result");
 const resultMeta = document.getElementById("result-meta");
 const resultError = document.getElementById("result-error");
 const resultList = document.getElementById("result-list");
+const toggleSubmitButton = document.getElementById("toggle-submit");
+const submitForm = document.getElementById("submit-form");
+const submitMessage = document.getElementById("submit-message");
+const submitCaptcha = document.getElementById("submit-captcha");
+const captchaLabel = document.getElementById("captcha-label");
+
+const SUBMIT_ENDPOINT = "https://script.google.com/macros/s/AKfycbwX4AG54cQhjrfjMp9IU88bAVzBcdHIgDR4NGQh3PZ69wJqjdjGVCeiVYCUnoA2o8QvmA/exec";
+const DUPLICATE_KEY = "rocegg-last-submit";
+const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
 
 let records = [];
+let captchaAnswer = null;
 
 loadData();
+refreshCaptcha();
+
+toggleSubmitButton.addEventListener("click", () => {
+  submitForm.classList.toggle("hidden");
+  submitMessage.classList.add("hidden");
+  if (!submitForm.classList.contains("hidden")) {
+    refreshCaptcha();
+  }
+});
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -87,8 +106,8 @@ function parseCsv(text) {
 }
 
 function parseNumber(value) {
-  const normalized = String(value).trim().replace(/[^\d.]/g, "");
-  if (!normalized) {
+  const normalized = String(value).trim();
+  if (!/^\d+(\.\d+)?$/.test(normalized)) {
     return null;
   }
 
@@ -97,4 +116,135 @@ function parseNumber(value) {
     return null;
   }
   return parsed;
+}
+
+submitForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const height = parseNumber(document.getElementById("submit-height").value);
+  const weight = parseNumber(document.getElementById("submit-weight").value);
+  const name = document.getElementById("submit-name").value.trim();
+  const captchaValue = parseNumber(submitCaptcha.value);
+
+  submitMessage.className = "submit-message";
+
+  const validationError = validateSubmission(height, weight, name, captchaValue);
+  if (validationError) {
+    submitMessage.textContent = validationError;
+    submitMessage.classList.add("error");
+    submitMessage.classList.remove("hidden");
+    return;
+  }
+
+  if (isDuplicateSubmission(height, weight, name)) {
+    submitMessage.textContent = "相同内容刚刚提交过，请勿重复上传";
+    submitMessage.classList.add("error");
+    submitMessage.classList.remove("hidden");
+    refreshCaptcha();
+    return;
+  }
+
+  submitMessage.textContent = "上传中...";
+  submitMessage.classList.remove("hidden");
+
+  try {
+    const response = await fetch(SUBMIT_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        height: String(height),
+        weight: String(weight),
+        name
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok || !data.ok) {
+      throw new Error(data.error || "上传失败");
+    }
+
+    rememberSubmission(height, weight, name);
+    submitMessage.textContent = "上传成功，已记录到表格";
+    submitMessage.classList.add("success");
+    submitForm.reset();
+    submitForm.classList.add("hidden");
+    refreshCaptcha();
+  } catch (error) {
+    submitMessage.textContent = error.message || "上传失败";
+    submitMessage.classList.add("error");
+    refreshCaptcha();
+  }
+});
+
+function validateSubmission(height, weight, name, captchaValue) {
+  if (height === null || weight === null || !name || captchaValue === null) {
+    return "请完整填写身高、体重、名称和验证码";
+  }
+
+  if (!(height > 0 && height <= 100)) {
+    return "身高请输入 0 到 100 之间的数字";
+  }
+
+  if (!(weight > 0 && weight <= 1000)) {
+    return "体重请输入 0 到 1000 之间的数字";
+  }
+
+  if (!/^[\u4e00-\u9fa5A-Za-z0-9·_\-\s]{2,12}$/.test(name)) {
+    return "名称长度需为 2 到 12，且不能包含特殊符号";
+  }
+
+  if (/^\d+$/.test(name)) {
+    return "名称不能是纯数字";
+  }
+
+  if (captchaValue !== captchaAnswer) {
+    return "验证码不正确";
+  }
+
+  return "";
+}
+
+function refreshCaptcha() {
+  const left = randomInt(1, 9);
+  const right = randomInt(1, 9);
+  captchaAnswer = left + right;
+  captchaLabel.textContent = `验证码：${left} + ${right} = ?`;
+  submitCaptcha.value = "";
+}
+
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function isDuplicateSubmission(height, weight, name) {
+  try {
+    const raw = localStorage.getItem(DUPLICATE_KEY);
+    if (!raw) {
+      return false;
+    }
+
+    const saved = JSON.parse(raw);
+    if (Date.now() - saved.time > DUPLICATE_WINDOW_MS) {
+      return false;
+    }
+
+    return saved.height === height && saved.weight === weight && saved.name === name;
+  } catch (error) {
+    return false;
+  }
+}
+
+function rememberSubmission(height, weight, name) {
+  try {
+    localStorage.setItem(DUPLICATE_KEY, JSON.stringify({
+      height,
+      weight,
+      name,
+      time: Date.now()
+    }));
+  } catch (error) {
+    // Ignore storage failures and keep submission flow usable.
+  }
 }

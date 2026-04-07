@@ -20,11 +20,11 @@
       <form id="lookup-form" class="lookup-form">
         <label>
           <span>身高</span>
-          <input id="height" name="height" placeholder="例如 0.35" required>
+          <input id="height" name="height" placeholder="请输入身高数值，例如 0.35" required>
         </label>
         <label>
           <span>体重</span>
-          <input id="weight" name="weight" placeholder="例如 8" required>
+          <input id="weight" name="weight" placeholder="请输入体重数值，例如 8" required>
         </label>
         <button type="submit">查询</button>
       </form>
@@ -33,6 +33,32 @@
         <p id="result-meta" class="meta"></p>
         <p id="result-error" class="error hidden"></p>
         <ul id="result-list"></ul>
+      </section>
+
+      <section class="submit-box">
+        <button id="toggle-submit" class="secondary-button" type="button">提交新数据</button>
+
+        <form id="submit-form" class="submit-form hidden">
+          <label>
+            <span>身高</span>
+            <input id="submit-height" name="height" placeholder="请输入身高数值" required>
+          </label>
+          <label>
+            <span>体重</span>
+            <input id="submit-weight" name="weight" placeholder="请输入体重数值" required>
+          </label>
+          <label class="full-width">
+            <span>名称</span>
+            <input id="submit-name" name="name" placeholder="请输入宠物名称" required>
+          </label>
+          <label class="full-width">
+            <span id="captcha-label">验证码</span>
+            <input id="submit-captcha" name="captcha" placeholder="请输入计算结果" required>
+          </label>
+          <button type="submit">上传</button>
+        </form>
+
+        <p id="submit-message" class="submit-message hidden"></p>
       </section>
     </section>
 
