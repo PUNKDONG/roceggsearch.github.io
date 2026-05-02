@@ -102,6 +102,12 @@ button {
   margin-bottom: 16px;
 }
 
+.ad-slot {
+  margin-top: 22px;
+  min-height: 100px;
+  overflow: hidden;
+}
+
 .submit-form {
   margin-top: 14px;
   display: grid;
