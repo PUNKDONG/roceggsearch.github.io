@@ -163,7 +163,16 @@ li {
   min-height: 250px;
   max-width: 100%;
   margin: 0 auto 22px;
+  border: 1px dashed rgba(197, 82, 45, 0.35);
+  border-radius: 14px;
+  background: rgba(255, 253, 248, 0.65);
   overflow: hidden;
+}
+
+.ad-box iframe {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .slot-trigger {
